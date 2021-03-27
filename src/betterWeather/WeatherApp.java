@@ -4,7 +4,8 @@ public class WeatherApp {
 
 	public static void main(String[] args) {
 		UserInput input = new UserInput();
-		input.askForCoordinates();
+		String city = input.askForCity();
+		CallWeatherAPI apiCalls = new CallWeatherAPI();
+		apiCalls.makeApiCall(city);
 	}
-
 }
