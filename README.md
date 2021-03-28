@@ -24,4 +24,4 @@ The last thing is, when getting the user input, we do not handle spaces correctl
 
 ## Iteration 1 Demo: 
 
-<img src="https://recordit.co/SSy3nyg4k7" width=1000 height=500><br>
+<img src="http://g.recordit.co/SSy3nyg4k7.gif" width=1000 height=500><br>
