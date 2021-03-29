@@ -21,6 +21,7 @@ The last thing is, when getting the user input, we do not handle spaces correctl
 
 ## What commands are needed to compile and run your code from the command line
 
+Currently users are not able to run the program from the command line. This is because we are using an external .jar library in order to call our API; and as of now the path where the file for this library is found is unique for every machine so for our next iteration we have to find a way to make it "global" so that it can be found by the script to be able to run it from the command line.
 
 ## Iteration 1 Demo: 
 
