@@ -1,4 +1,4 @@
 #!/bin/bash
 
-javac src/betterWeather/*.java
-java -cp src betterWeather.WeatherApp
+javac -cp lib/java-json.jar src/betterWeather/*.java
+java -cp "src:lib/*" betterWeather.WeatherApp
