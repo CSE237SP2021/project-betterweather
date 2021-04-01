@@ -47,7 +47,7 @@ public class CallWeatherAPI {
 			double tempInF = main.getDouble("temp");
 			
 			System.out.println("City: " + cityName);
-			System.out.println("Current day temp: " + tempInF + "°F"); 
+			System.out.println("Current day temp: " + tempInF + "\u00B0" + "F"); 
 			
 			JSONObject coord = data.getJSONObject("coord");
 			Double lat = coord.getDouble("lat");
@@ -92,7 +92,7 @@ public class CallWeatherAPI {
 				JSONObject hourlyReport = (JSONObject) hourly_48hours.get(i);
 				double tempInF = hourlyReport.getDouble("temp");
 				if (i < 25) {
-					System.out.println("Hour " + i + " temp: "  + tempInF +"°F");
+					System.out.println("Hour " + i + " temp: "  + tempInF + "\u00B0" +"F");
 				}
 			}
 			
@@ -103,8 +103,8 @@ public class CallWeatherAPI {
 				double dayTempInF = tempObj.getDouble("day");
 				double lowTempInF = tempObj.getDouble("min");
 				double highTempInF = tempObj.getDouble("max");
-				System.out.println("Day " + i + "-> Temp: " + dayTempInF + "°F   " + 
-				"Low: " + lowTempInF + "°F   "  + "High: " + highTempInF + "°F");
+				System.out.println("Day " + i + "-> Temp: " + dayTempInF + "\u00B0" + "F   " + 
+				"Low: " + lowTempInF + "\u00B0" + "F   "  + "High: " + highTempInF + "\u00B0" + "F");
 			}
 		} catch (JSONException e) {
 			System.out.print("Error in second api call");		}
