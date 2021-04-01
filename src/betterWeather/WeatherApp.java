@@ -8,6 +8,6 @@ public class WeatherApp {
 		FormatCity formatter = new FormatCity(city);
 		String formattedCity = formatter.formatCity();
 		CallWeatherAPI apiCalls = new CallWeatherAPI();
-		apiCalls.makeApiCall(formattedCity);
+		apiCalls.makeCityApiCall(formattedCity);
 	}
 }
