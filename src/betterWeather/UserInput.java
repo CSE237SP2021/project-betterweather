@@ -16,25 +16,25 @@ public class UserInput {
 		return cityName;
 	}
 	
-	public int[] askForCoordinates() {
-		int[] coordinates = {Integer.MAX_VALUE, Integer.MAX_VALUE};
-		int invalidCoordinatesCounter = 0;
+	public double[] askForCoordinates() {
+		double[] coordinates = {Double.MAX_VALUE, Double.MAX_VALUE};
+		double invalidCoordinatesCounter = 0;
 		while(!this.validateCoordinates(coordinates)) {
 			if(invalidCoordinatesCounter > 0) {
 				System.out.println("Please input valid coordinates");
 			}
 			System.out.println("Please input the lattitude (-90 to 90)");
 			String lattitude = this.keybordIn.nextLine();
-			coordinates[0]=Integer.parseInt(lattitude);
+			coordinates[0]=Double.parseDouble(lattitude);
 			System.out.println("Please input the longitude (-180 to 180)");
 			String longitude = this.keybordIn.nextLine();
-			coordinates[1]=Integer.parseInt(longitude);
+			coordinates[1]=Double.parseDouble(longitude);
 			invalidCoordinatesCounter++;
 		}
 		return coordinates;
 	}
 	
-	public boolean validateCoordinates(int[] coordinates) {
+	public boolean validateCoordinates(double[] coordinates) {
 		boolean validCoordinates = true;
 		if(coordinates[0] < -90 || coordinates[0] > 90) {
 			validCoordinates = false;

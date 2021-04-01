@@ -7,6 +7,6 @@
 		</attributes>
 	</classpathentry>
 	<classpathentry kind="con" path="org.eclipse.jdt.junit.JUNIT_CONTAINER/5"/>
-	<classpathentry kind="lib" path="/Users/mauriciofossaskoval/Documents/CSE237/project-betterweather/lib/java-json.jar"/>
+	<classpathentry kind="lib" path="C:/Users/Logic&apos;s Flex 5/Desktop/spring_2021/cse_237/final_project/betterweather/src/betterWeather/java-json.jar"/>
 	<classpathentry kind="output" path="bin"/>
 </classpath>
