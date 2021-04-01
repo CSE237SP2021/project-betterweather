@@ -6,6 +6,9 @@ import java.net.URI;
 import java.net.http.HttpClient;
 import java.net.http.HttpRequest;
 import java.net.http.HttpResponse;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
+import java.util.Date;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -70,6 +73,8 @@ public class CallWeatherAPI {
 		HttpRequest request = HttpRequest.newBuilder()
 				.uri(URI.create("https://api.openweathermap.org/data/2.5/onecall?lat=" + lat + "&lon=" + lon
 						+ "&exclude=minutely" + "&appid=" + apiKey + "&units=imperial")).build();
+		System.out.println("https://api.openweathermap.org/data/2.5/onecall?lat=" + lat + "&lon=" + lon
+						+ "&exclude=minutely" + "&appid=" + apiKey + "&units=imperial");
 		client.sendAsync(request, HttpResponse.BodyHandlers.ofString())
 			.thenApply(HttpResponse::body)
 			.thenApply(CallWeatherAPI::parseCoord)
@@ -103,11 +108,15 @@ public class CallWeatherAPI {
 				double dayTempInF = tempObj.getDouble("day");
 				double lowTempInF = tempObj.getDouble("min");
 				double highTempInF = tempObj.getDouble("max");
-				System.out.println("Day " + i + "-> Temp: " + dayTempInF + "\u00B0" + "F   " + 
+				Integer dt = dailyReport.getInt("dt");
+				Date dt2 = new Date (dt); 
+				SimpleDateFormat sfd = new SimpleDateFormat("dd-MM-yyyy");
+				System.out.println("Day " + sfd.format(dt2) + "-> Temp: " + dayTempInF + "\u00B0" + "F   " + 
 				"Low: " + lowTempInF + "\u00B0" + "F   "  + "High: " + highTempInF + "\u00B0" + "F");
 			}
 		} catch (JSONException e) {
-			System.out.print("Error in second api call");		}
+			System.out.print("Error in second api call");
+		}
 		return null;
 	}
 }
