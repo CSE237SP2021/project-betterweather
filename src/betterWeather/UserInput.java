@@ -16,6 +16,23 @@ public class UserInput {
 		return cityName;
 	}
 	
+	public boolean askRunAgain() {
+		System.out.println("What would you like to do next? (number or command)");
+		System.out.println("1. Main menu");
+		System.out.println("2. Quit");
+		String answer = this.keybordIn.nextLine();
+		if(answer.equals("1")||answer.toLowerCase().equals("main menu")) {
+			return true;
+		} else if (answer.equals("2")||answer.toLowerCase().equals("quit")) {
+			System.out.println("Thank you for using Better Weather!");
+			return false;
+		}else {
+			System.out.println(answer +" is not a valid option. Please try again");
+			askRunAgain();
+		}
+		return true;
+	}
+	
 	public double[] askForCoordinates() {
 		double[] coordinates = {Double.MAX_VALUE, Double.MAX_VALUE};
 		double invalidCoordinatesCounter = 0;
