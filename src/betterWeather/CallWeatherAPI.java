@@ -55,7 +55,7 @@ public class CallWeatherAPI {
 			JSONObject coord = data.getJSONObject("coord");
 			Double lat = coord.getDouble("lat");
 			Double lon = coord.getDouble("lon");
-			System.out.println("Coordinates -> Latitude: " + lat + " / Longitude: " + lon);
+			//System.out.println("Coordinates -> Latitude: " + lat + " / Longitude: " + lon);
 			makeCoordApiCall(lat, lon);
 		} catch (JSONException e) {
 			System.out.print("Error, input a valid city. If spaces in between please place %20 for each space. EX: New York -> New%20York");
@@ -73,8 +73,6 @@ public class CallWeatherAPI {
 		HttpRequest request = HttpRequest.newBuilder()
 				.uri(URI.create("https://api.openweathermap.org/data/2.5/onecall?lat=" + lat + "&lon=" + lon
 						+ "&exclude=minutely" + "&appid=" + apiKey + "&units=imperial")).build();
-		System.out.println("https://api.openweathermap.org/data/2.5/onecall?lat=" + lat + "&lon=" + lon
-						+ "&exclude=minutely" + "&appid=" + apiKey + "&units=imperial");
 		client.sendAsync(request, HttpResponse.BodyHandlers.ofString())
 			.thenApply(HttpResponse::body)
 			.thenApply(CallWeatherAPI::parseCoord)
@@ -95,9 +93,16 @@ public class CallWeatherAPI {
 			System.out.println("24 Hour / Hourly Report: ");
 			for (int i = 0 ; i < hourly_48hours.length() ; i++) {
 				JSONObject hourlyReport = (JSONObject) hourly_48hours.get(i);
+				
+				
 				double tempInF = hourlyReport.getDouble("temp");
+				Integer dt = hourlyReport.getInt("dt");
+				Date dt2 = new Date (dt *1000L); 
+				SimpleDateFormat sfd = new SimpleDateFormat("h:mm a");
+				
+				
 				if (i < 25) {
-					System.out.println("Hour " + i + " temp: "  + tempInF + "\u00B0" +"F");
+					System.out.println(sfd.format(dt2) + " Temp: "  + tempInF + "\u00B0" +"F");
 				}
 			}
 			
@@ -109,8 +114,8 @@ public class CallWeatherAPI {
 				double lowTempInF = tempObj.getDouble("min");
 				double highTempInF = tempObj.getDouble("max");
 				Integer dt = dailyReport.getInt("dt");
-				Date dt2 = new Date (dt); 
-				SimpleDateFormat sfd = new SimpleDateFormat("dd-MM-yyyy");
+				Date dt2 = new Date (dt *1000L); 
+				SimpleDateFormat sfd = new SimpleDateFormat("MMM-dd-yyyy");
 				System.out.println("Day " + sfd.format(dt2) + "-> Temp: " + dayTempInF + "\u00B0" + "F   " + 
 				"Low: " + lowTempInF + "\u00B0" + "F   "  + "High: " + highTempInF + "\u00B0" + "F");
 			}

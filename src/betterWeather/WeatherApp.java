@@ -7,6 +7,7 @@ public class WeatherApp {
 		String city = input.askForCity();
 		FormatCity formatter = new FormatCity(city);
 		String formattedCity = formatter.formatCity();
+//		input.askForWeatherReport();
 		CallWeatherAPI apiCalls = new CallWeatherAPI();
 		apiCalls.makeCityApiCall(formattedCity);
 	}
