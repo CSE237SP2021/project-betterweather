@@ -58,7 +58,7 @@ public class CallWeatherAPI {
 			System.out.println("Coordinates -> Latitude: " + lat + " / Longitude: " + lon);
 			makeCoordApiCall(lat, lon);
 		} catch (JSONException e) {
-			System.out.print("Error, input a valid city. If spaces in between please place %20 for each space. EX: New York -> New%20York");
+			System.out.println("Error, input a valid city. If spaces in between please place %20 for each space. EX: New York -> New%20York");
 		}
 		return null;
 	}
