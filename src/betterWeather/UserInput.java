@@ -42,6 +42,7 @@ public class UserInput {
 			result = askCityOrZip();
 		}
 		return result;
+	}
 
 	public boolean askRunAgain() {
 		System.out.println("What would you like to do next? (number or command)");

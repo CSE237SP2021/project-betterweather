@@ -80,8 +80,6 @@ public class CallWeatherAPI {
 		HttpRequest request = HttpRequest.newBuilder()
 				.uri(URI.create("https://api.openweathermap.org/data/2.5/onecall?lat=" + lat + "&lon=" + lon
 						+ "&exclude=minutely" + "&appid=" + apiKey + "&units=imperial")).build();
-		System.out.println("https://api.openweathermap.org/data/2.5/onecall?lat=" + lat + "&lon=" + lon
-						+ "&exclude=minutely" + "&appid=" + apiKey + "&units=imperial");
 		client.sendAsync(request, HttpResponse.BodyHandlers.ofString())
 			.thenApply(HttpResponse::body)
 			.thenApply(CallWeatherAPI::parseCoord)
@@ -102,9 +100,12 @@ public class CallWeatherAPI {
 			System.out.println("24 Hour / Hourly Report: ");
 			for (int i = 0 ; i < hourly_48hours.length() ; i++) {
 				JSONObject hourlyReport = (JSONObject) hourly_48hours.get(i);
+				Integer dt = hourlyReport.getInt("dt");
+				Date dt2 = new Date(dt * 1000L);
+				SimpleDateFormat sfd = new SimpleDateFormat("h:mm a");
 				double tempInF = hourlyReport.getDouble("temp");
 				if (i < 25) {
-					System.out.println("Hour " + i + " temp: "  + tempInF + "\u00B0" +"F");
+					System.out.println(sfd.format(dt2) + " temp: "  + tempInF + "\u00B0" +"F");
 				}
 			}
 			
@@ -116,12 +117,12 @@ public class CallWeatherAPI {
 				double lowTempInF = tempObj.getDouble("min");
 				double highTempInF = tempObj.getDouble("max");
 				Integer dt = dailyReport.getInt("dt");
-				Date dt2 = new Date (dt); 
+				Date dt2 = new Date (dt*1000L); 
 				double precipitation = dailyReport.getDouble("pop") * 100.00;
 				double cloudiness = dailyReport.getDouble("clouds");
 				JSONArray weatherArray = dailyReport.getJSONArray("weather");
 				String description = weatherArray.optJSONObject(0).getString("description");
-				SimpleDateFormat sfd = new SimpleDateFormat("dd-MM-yyyy");
+				SimpleDateFormat sfd = new SimpleDateFormat("MMM-dd-yyyy");
 				System.out.println("Day " + sfd.format(dt2));
 				System.out.println("        " + capitalizeFirstLetter(description));
 				CreateArt(weatherArray.optJSONObject(0).getInt("id"));
