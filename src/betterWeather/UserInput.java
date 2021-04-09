@@ -5,15 +5,43 @@ import java.util.Scanner;
 public class UserInput {
 	
 	private Scanner keybordIn;
+	public boolean isCityName;
 	
 	public UserInput() {
 		this.keybordIn = new Scanner(System.in);
+		this.isCityName = true;
 	}
 	
 	public String askForCity() {
 		System.out.println("Please input the name of a city");
 		String cityName = this.keybordIn.nextLine();
 		return cityName;
+	}
+	
+	public String askForZip() {
+		System.out.println("Please input the zipcode of a city");
+		String cityZip = this.keybordIn.nextLine();
+		return cityZip;
+	}
+	
+	public String askCityOrZip() {
+		System.out.println("Search city by 'name' or 'zipcode'");
+		String input = this.keybordIn.nextLine();
+		String result = null;
+		if (input.equals("name")) {
+			result = askForCity();
+			FormatCity formatter = new FormatCity(result);
+			result = formatter.formatCity();
+		}
+		else if (input.equals("zipcode")) {
+			result = askForZip();
+			this.isCityName = false;
+		}
+		else {
+			System.out.println("Please type 'name' or 'zipcode' to specify your search method.");
+			result = askCityOrZip();
+		}
+		return result;
 	}
 	
 	public double[] askForCoordinates() {

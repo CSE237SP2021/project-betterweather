@@ -4,10 +4,10 @@ public class WeatherApp {
 
 	public static void main(String[] args) {
 		UserInput input = new UserInput();
-		String city = input.askForCity();
-		FormatCity formatter = new FormatCity(city);
-		String formattedCity = formatter.formatCity();
+		String searchInput = input.askCityOrZip();
 		CallWeatherAPI apiCalls = new CallWeatherAPI();
-		apiCalls.makeCityApiCall(formattedCity);
+		apiCalls.makeCityApiCall(searchInput, input.isCityName);
+
+		
 	}
 }
