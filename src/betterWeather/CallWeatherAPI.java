@@ -110,13 +110,87 @@ public class CallWeatherAPI {
 				double highTempInF = tempObj.getDouble("max");
 				Integer dt = dailyReport.getInt("dt");
 				Date dt2 = new Date (dt); 
+				double precipitation = dailyReport.getDouble("pop") * 100.00;
+				double cloudiness = dailyReport.getDouble("clouds");
+				JSONArray weatherArray = dailyReport.getJSONArray("weather");
+				String description = weatherArray.optJSONObject(0).getString("description");
 				SimpleDateFormat sfd = new SimpleDateFormat("dd-MM-yyyy");
-				System.out.println("Day " + sfd.format(dt2) + "-> Temp: " + dayTempInF + "\u00B0" + "F   " + 
-				"Low: " + lowTempInF + "\u00B0" + "F   "  + "High: " + highTempInF + "\u00B0" + "F");
+				System.out.println("Day " + sfd.format(dt2));
+				System.out.println("        " + capitalizeFirstLetter(description));
+				CreateArt(weatherArray.optJSONObject(0).getInt("id"));
+				System.out.println("        Temp: " + dayTempInF + "\u00B0" + "F");
+				System.out.println("        Low: " + lowTempInF + "\u00B0" + "F");
+				System.out.println("        High: " + highTempInF + "\u00B0" + "F");
+				System.out.println("        Precipitation: " + precipitation + "%");
+				System.out.println("        Cloudiness: " + cloudiness + "%");
 			}
 		} catch (JSONException e) {
 			System.out.print("Error in second api call");
 		}
 		return null;
+	}
+	
+	
+	private static void CreateArt(int id) {
+		int firstDigit = Integer.parseInt(Integer.toString(id).substring(0, 1));
+		//Thunderstorm
+		if(firstDigit == 2) {
+			System.out.println("                      _____ ");
+			System.out.println("                     /     \\ ");
+			System.out.println("                     \\_____/ ");
+			System.out.println("                     '  /  '");
+			System.out.println("                      ' - '");
+			System.out.println("                     '  /  '");
+		}
+		//Drizzle
+		if(firstDigit == 3) {
+			System.out.println("                      _____ ");
+			System.out.println("                     /     \\ ");
+			System.out.println("                     \\_____/ ");
+			System.out.println("                         '");
+			System.out.println("                        '");
+			System.out.println("                          '");
+		}
+		//Rain
+		if(firstDigit == 5) {
+			System.out.println("                      _____ ");
+			System.out.println("                     /     \\ ");
+			System.out.println("                     \\_____/ ");
+			System.out.println("                     '  '  '");
+			System.out.println("                      ' ' '");
+			System.out.println("                     '   '  '");
+		}
+		//Snow
+		if(firstDigit == 6) {
+			System.out.println("                      _____ ");
+			System.out.println("                     /     \\ ");
+			System.out.println("                     \\_____/ ");
+			System.out.println("                        *      ");
+			System.out.println("                      *    *     ");
+			System.out.println("                       *  *       ");
+		}
+		//Clear
+		if(firstDigit == 7 || id == 800) {
+			System.out.println("                       |  ");
+			System.out.println("                      _|_ ");
+			System.out.println("                 ____/   \\____ ");
+			System.out.println("                     \\___/ ");
+			System.out.println("                       |  ");
+			System.out.println("                       |  ");
+		}
+		//Cloudy
+		if(firstDigit == 8 && id!= 800) {
+			System.out.println("                      _____ ");
+			System.out.println("                     /     \\ ");
+			System.out.println("                     \\_____/ ");
+			System.out.println("                 _____       _____   ");
+			System.out.println("                /     \\     /     \\ ");
+			System.out.println("                \\_____/     \\_____/ ");
+		}
+	}
+	
+	private static String capitalizeFirstLetter(String str) {
+		if(str == null) return str;
+	    return str.substring(0, 1).toUpperCase() + str.substring(1);
 	}
 }
