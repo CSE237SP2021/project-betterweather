@@ -43,6 +43,16 @@ public class UserInput {
 		}
 		return result;
 	}
+	
+	public String hourlyOrDaily() {
+		System.out.println("Do you want an 'hourly' or 'daily' report?");
+		String input = this.keybordIn.nextLine();
+		if (!(input.equalsIgnoreCase("hourly") || input.equalsIgnoreCase("daily"))) {
+			System.out.println("Please type 'name' or 'zipcode' to specify your search method.");
+			input = hourlyOrDaily();
+		}
+		return input;
+	}
 
 	public boolean askRunAgain() {
 		System.out.println("What would you like to do next? (number or command)");
