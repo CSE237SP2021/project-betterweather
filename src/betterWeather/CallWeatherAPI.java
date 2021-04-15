@@ -89,48 +89,51 @@ public class CallWeatherAPI {
 	/**
 	 * 
 	 * @param responseBody The response from our api call made directly in "makeCoordApiCall"
-	 * @return returns null, the purpose of this function is to just print out the weather information from the response body
+	 * @return null, purpose of the function is to print out the weather
 	 */
 	private static String parseCoord(String responseBody) {
 		try {
 			JSONObject data = new JSONObject(responseBody);
-			JSONArray hourly_48hours = data.getJSONArray("hourly");
-			JSONArray daily_7days = data.getJSONArray("daily");
-			
-			System.out.println("24 Hour / Hourly Report: ");
-			for (int i = 0 ; i < hourly_48hours.length() ; i++) {
-				JSONObject hourlyReport = (JSONObject) hourly_48hours.get(i);
-				Integer dt = hourlyReport.getInt("dt");
-				Date dt2 = new Date(dt * 1000L);
-				SimpleDateFormat sfd = new SimpleDateFormat("h:mm a");
-				double tempInF = hourlyReport.getDouble("temp");
-				if (i < 25) {
-					System.out.println(sfd.format(dt2) + " temp: "  + tempInF + "\u00B0" +"F");
+			UserInput input = new UserInput();
+			String hourlyOrDaily = input.hourlyOrDaily();
+			if(hourlyOrDaily.equalsIgnoreCase("hourly")) {
+				JSONArray hourly_48hours = data.getJSONArray("hourly");
+				System.out.println("24 Hour / Hourly Report: ");
+				for (int i = 0 ; i < hourly_48hours.length() ; i++) {
+					JSONObject hourlyReport = (JSONObject) hourly_48hours.get(i);
+					Integer dt = hourlyReport.getInt("dt");
+					Date dt2 = new Date(dt * 1000L);
+					SimpleDateFormat sfd = new SimpleDateFormat("h:mm a");
+					double tempInF = hourlyReport.getDouble("temp");
+					if (i < 25) {
+						System.out.println(sfd.format(dt2) + " temp: "  + tempInF + "\u00B0" +"F");
+					}
 				}
-			}
-			
-			System.out.println("7 Day / Daily Report: ");
-			for (int i = 0 ; i < daily_7days.length() ; i++) {
-				JSONObject dailyReport = (JSONObject) daily_7days.get(i);
-				JSONObject tempObj = (JSONObject) dailyReport.getJSONObject("temp");
-				double dayTempInF = tempObj.getDouble("day");
-				double lowTempInF = tempObj.getDouble("min");
-				double highTempInF = tempObj.getDouble("max");
-				Integer dt = dailyReport.getInt("dt");
-				Date dt2 = new Date (dt*1000L); 
-				double precipitation = dailyReport.getDouble("pop") * 100.00;
-				double cloudiness = dailyReport.getDouble("clouds");
-				JSONArray weatherArray = dailyReport.getJSONArray("weather");
-				String description = weatherArray.optJSONObject(0).getString("description");
-				SimpleDateFormat sfd = new SimpleDateFormat("MMM-dd-yyyy");
-				System.out.println("Day " + sfd.format(dt2));
-				System.out.println("        " + capitalizeFirstLetter(description));
-				CreateArt(weatherArray.optJSONObject(0).getInt("id"));
-				System.out.println("        Temp: " + dayTempInF + "\u00B0" + "F");
-				System.out.println("        Low: " + lowTempInF + "\u00B0" + "F");
-				System.out.println("        High: " + highTempInF + "\u00B0" + "F");
-				System.out.println("        Precipitation: " + precipitation + "%");
-				System.out.println("        Cloudiness: " + cloudiness + "%");
+			} else {
+				JSONArray daily_7days = data.getJSONArray("daily");
+				System.out.println("7 Day / Daily Report: ");
+				for (int i = 0 ; i < daily_7days.length() ; i++) {
+					JSONObject dailyReport = (JSONObject) daily_7days.get(i);
+					JSONObject tempObj = (JSONObject) dailyReport.getJSONObject("temp");
+					double dayTempInF = tempObj.getDouble("day");
+					double lowTempInF = tempObj.getDouble("min");
+					double highTempInF = tempObj.getDouble("max");
+					Integer dt = dailyReport.getInt("dt");
+					Date dt2 = new Date (dt*1000L); 
+					double precipitation = dailyReport.getDouble("pop") * 100.00;
+					double cloudiness = dailyReport.getDouble("clouds");
+					JSONArray weatherArray = dailyReport.getJSONArray("weather");
+					String description = weatherArray.optJSONObject(0).getString("description");
+					SimpleDateFormat sfd = new SimpleDateFormat("MMM-dd-yyyy");
+					System.out.println("Day " + sfd.format(dt2));
+					System.out.println("        " + capitalizeFirstLetter(description));
+					CreateArt(weatherArray.optJSONObject(0).getInt("id"));
+					System.out.println("        Temp: " + dayTempInF + "\u00B0" + "F");
+					System.out.println("        Low: " + lowTempInF + "\u00B0" + "F");
+					System.out.println("        High: " + highTempInF + "\u00B0" + "F");
+					System.out.println("        Precipitation: " + precipitation + "%");
+					System.out.println("        Cloudiness: " + cloudiness + "%");
+				}
 			}
 		} catch (JSONException e) {
 			System.out.print("Error in second api call");
