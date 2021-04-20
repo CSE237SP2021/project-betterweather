@@ -2,7 +2,7 @@
 .classpath
 .DS_Store
 CallWeatherAPI.class
-FormatCity.class
+Formatter.class
 UserInput.class
 WeatherApp.class
 FormatCityTests.class
