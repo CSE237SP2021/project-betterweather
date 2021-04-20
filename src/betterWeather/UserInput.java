@@ -28,10 +28,10 @@ public class UserInput {
 		System.out.println("Search city by 'name' or 'zipcode'");
 		String input = this.keybordIn.nextLine();
 		String result = null;
+		Formatter formatter = new Formatter();
 		if (input.equals("name")) {
 			result = askForCity();
-			FormatCity formatter = new FormatCity(result);
-			result = formatter.formatCity();
+			result = formatter.formatCity(result);
 		}
 		else if (input.equals("zipcode")) {
 			result = askForZip();

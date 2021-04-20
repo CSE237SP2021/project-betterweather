@@ -4,29 +4,29 @@ import static org.junit.jupiter.api.Assertions.*;
 
 import org.junit.jupiter.api.Test;
 
-import betterWeather.FormatCity;
+import betterWeather.Formatter;
 
 class FormatCityTests {
 
 	@Test
 	void citiesWithNoSpaces() {
-		FormatCity chicago = new FormatCity("chicago");
-		String formattedChicago = chicago.formatCity();
+		Formatter chicago = new Formatter();
+		String formattedChicago = chicago.formatCity("chicago");
 		assertTrue(formattedChicago.equals("chicago"));
 		
-		FormatCity phoenix = new FormatCity("Phoenix");
-		String formattedPhoenix= phoenix.formatCity();
+		Formatter phoenix = new Formatter();
+		String formattedPhoenix= phoenix.formatCity("Phoenix");
 		assertTrue(formattedPhoenix.equals("Phoenix"));
 	}
 	
 	@Test
 	void citiesWithSpaces() {
-		FormatCity nyc = new FormatCity("new york");
-		String formattedNyc = nyc.formatCity();
+		Formatter nyc = new Formatter();
+		String formattedNyc = nyc.formatCity("new york");
 		assertTrue(formattedNyc.equals("new%20york"));
 		
-		FormatCity rsm = new FormatCity("Rancho Santa Margarita");
-		String formattedRsm = rsm.formatCity();
+		Formatter rsm = new Formatter();
+		String formattedRsm = rsm.formatCity("Rancho Santa Margarita");
 		assertTrue(formattedRsm.equals("Rancho%20Santa%20Margarita"));
 		
 	}
