@@ -1,2 +1,9 @@
 /bin/
 .classpath
+.DS_Store
+CallWeatherAPI.class
+FormatCity.class
+UserInput.class
+WeatherApp.class
+FormatCityTests.class
+UserInputTests.class
