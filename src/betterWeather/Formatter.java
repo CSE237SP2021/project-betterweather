@@ -21,8 +21,12 @@ public class Formatter {
 	    return str.substring(0, 1).toUpperCase() + str.substring(1);
 	}
 	
+	public static int getFirstDigit(int number) {
+		return Integer.parseInt(Integer.toString(number).substring(0, 1));
+	}
+	
 	public static void CreateArt(int id) {
-		int firstDigit = Integer.parseInt(Integer.toString(id).substring(0, 1));
+		int firstDigit = getFirstDigit(id);
 		//Thunderstorm
 		if(firstDigit == 2) {
 			System.out.println("                      _____ ");

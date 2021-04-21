@@ -33,5 +33,23 @@ class UserInputTests {
 		assertFalse(incorrect3);
 		assertFalse(incorrect4);
 	}
+	
+	@Test
+	void isZipcode() {
+		UserInput testingZip = new UserInput();
+		boolean zip1 = testingZip.validateZip("zipcode");
+		boolean zip2 = testingZip.validateZip("ZIPCODE");
+		assertTrue(zip1);
+		assertTrue(zip2);
+	}
+	
+	@Test
+	void isNotZipcode() {
+		UserInput testingZip = new UserInput();
+		boolean zip1 = testingZip.validateZip("zipcde");
+		boolean zip2 = testingZip.validateZip("ZC");
+		assertFalse(zip1);
+		assertFalse(zip2);
+	}
 
 }
