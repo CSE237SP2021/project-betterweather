@@ -51,5 +51,23 @@ class UserInputTests {
 		assertFalse(zip1);
 		assertFalse(zip2);
 	}
+	
+	@Test
+	void isCity() {
+		UserInput testingCity = new UserInput();
+		boolean city1 = testingCity.validateCity("name");
+		boolean city2 = testingCity.validateCity("NAmE");
+		assertTrue(city1);
+		assertTrue(city2);
+	}
+	
+	@Test
+	void isNotCity() {
+		UserInput testingCity = new UserInput();
+		boolean city1 = testingCity.validateCity("NM");
+		boolean city2 = testingCity.validateCity("nae");
+		assertFalse(city1);
+		assertFalse(city2);
+	}
 
 }
