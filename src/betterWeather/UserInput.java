@@ -93,6 +93,22 @@ public class UserInput {
 		return input;
 	}
 	
+	//Function used for testing
+	public boolean validateOne(String input) {
+		if(input.toLowerCase().equals("one")) {
+			return true;
+		}
+		return false;
+	}
+	
+	//Function used for testing
+	public boolean validateAll(String input) {
+		if(input.toLowerCase().equals("all")) {
+			return true;
+		}
+		return false;
+	}
+	
 	public String whichDay_dailyReport() {
 		System.out.println("How many days ahead do you want to see ('0', '1', '2', '3', '4', '5', '6', '7'): ");
 		String input = this.keybordIn.nextLine();
@@ -101,6 +117,22 @@ public class UserInput {
 			input = whichDay_dailyReport();
 		}
 		return input;
+	}
+	
+	//Function used for testing
+	public boolean validateWhichDay(String input) {
+		if(input.equals("0") || 
+				input.equals("1") ||
+				input.equals("2") || 
+				input.equals("3") || 
+				input.equals("4") || 
+				input.equals("5") || 
+				input.equals("6") || 
+				input.equals("7")) 
+		{
+			return true;
+		}
+		return false;
 	}
 
 	public boolean askRunAgain() {
