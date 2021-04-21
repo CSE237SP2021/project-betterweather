@@ -43,5 +43,14 @@ class FormatterTests {
 		assertEquals(Formatter.getFirstDigit(89012), 8);
 		assertEquals(Formatter.getFirstDigit(90123), 9);
 	}
+	
+	@Test
+	void capitalizeFirstLetterTest() {
+		assertEquals(Formatter.capitalizeFirstLetter("hELLO"), "HELLO");
+		assertEquals(Formatter.capitalizeFirstLetter("HELLO"), "HELLO");
+		assertEquals(Formatter.capitalizeFirstLetter("Hello"), "Hello");
+		assertEquals(Formatter.capitalizeFirstLetter("hello"), "Hello");
+		assertEquals(Formatter.capitalizeFirstLetter(null), null);
+	}
 
 }
