@@ -69,5 +69,51 @@ class UserInputTests {
 		assertFalse(city1);
 		assertFalse(city2);
 	}
+	
+	@Test
+	void reportIsHourly() {
+		UserInput test = new UserInput();
+		String hourly1 = "hourly";
+		String hourly2 = "HOurlY";
+		String hourly3 = "HOURLY";
+		assertTrue(test.validateHourly(hourly1));
+		assertTrue(test.validateHourly(hourly2));
+		assertTrue(test.validateHourly(hourly3));
+	}
+	
+	void reportIsNotHourly() {
+		UserInput test = new UserInput();
+		String hourly1 = "hour4ly";
+		String hourly2 = "HrlY";
+		String hourly3 = "H";
+		assertFalse(test.validateHourly(hourly1));
+		assertFalse(test.validateHourly(hourly2));
+		assertFalse(test.validateHourly(hourly3));
+	}
+
+	@Test
+	void reportIsDaily() {
+		UserInput test = new UserInput();
+		String daily1 = "daily";
+		String daily2 = "DaIly";
+		String daily3 = "DAILY";
+		assertTrue(test.validateDaily(daily1));
+		assertTrue(test.validateDaily(daily2));
+		assertTrue(test.validateDaily(daily3));
+	}
+	
+	@Test
+	void reportIsNotDaily() {
+		UserInput test = new UserInput();
+		String daily1 = "dai";
+		String daily2 = "D";
+		String daily3 = "DAIe4LY";
+		assertFalse(test.validateDaily(daily1));
+		assertFalse(test.validateDaily(daily2));
+		assertFalse(test.validateDaily(daily3));
+	}
+	
+
+
 
 }

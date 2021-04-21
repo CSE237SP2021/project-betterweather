@@ -68,6 +68,22 @@ public class UserInput {
 		return input;
 	}
 	
+	//Function used for testing
+	public boolean validateHourly(String input) {
+		if(input.toLowerCase().equals("hourly")) {
+			return true;
+		}
+		return false;
+	}
+	
+	//Function used for testing
+	public boolean validateDaily(String input) {
+		if(input.toLowerCase().equals("daily")) {
+			return true;
+		}
+		return false;
+	}
+	
 	public String oneOrAll_dailyReport() {
 		System.out.println("Do you want to display 'one' day or 'all' days this week?");
 		String input = this.keybordIn.nextLine();
