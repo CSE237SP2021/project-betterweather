@@ -14,6 +14,9 @@ import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import betterWeather.Formatter;
+import betterWeather.UserInput;
+
 
 public class CallWeatherAPI {
 	private static HttpURLConnection connection;
@@ -111,33 +114,59 @@ public class CallWeatherAPI {
 				}
 			} else {
 				JSONArray daily_7days = data.getJSONArray("daily");
+				UserInput uInput = new UserInput();
+				String thisDay = null;
+				String allOrOne = uInput.oneOrAll_dailyReport();
+				
+				if (allOrOne.equalsIgnoreCase("one")) {
+					thisDay = uInput.whichDay_dailyReport();
+				}
+				
+				//7 Day report
 				System.out.println("7 Day / Daily Report: ");
 				for (int i = 0 ; i < daily_7days.length() ; i++) {
-					JSONObject dailyReport = (JSONObject) daily_7days.get(i);
-					JSONObject tempObj = (JSONObject) dailyReport.getJSONObject("temp");
-					double dayTempInF = tempObj.getDouble("day");
-					double lowTempInF = tempObj.getDouble("min");
-					double highTempInF = tempObj.getDouble("max");
-					Integer dt = dailyReport.getInt("dt");
-					Date dt2 = new Date (dt*1000L); 
-					double precipitation = Formatter.roundToTwoDecimals(dailyReport.getDouble("pop") * 100.00);
-					double cloudiness = Formatter.roundToTwoDecimals(dailyReport.getDouble("clouds"));
-					JSONArray weatherArray = dailyReport.getJSONArray("weather");
-					String description = weatherArray.optJSONObject(0).getString("description");
-					SimpleDateFormat sfd = new SimpleDateFormat("MMM-dd-yyyy");
-					System.out.println("Day " + sfd.format(dt2));
-					System.out.println("        " + Formatter.capitalizeFirstLetter(description));
-					Formatter.CreateArt(weatherArray.optJSONObject(0).getInt("id"));
-					System.out.println("        Temp: " + dayTempInF + "\u00B0" + "F");
-					System.out.println("        Low: " + lowTempInF + "\u00B0" + "F");
-					System.out.println("        High: " + highTempInF + "\u00B0" + "F");
-					System.out.println("        Precipitation: " + precipitation + "%");
-					System.out.println("        Cloudiness: " + cloudiness + "%");
+					//Single day report
+					if (allOrOne.equalsIgnoreCase("one")) {
+						if(i == Integer.parseInt(thisDay)) {
+							generateDailyReport(daily_7days, i);
+							break;
+						}
+						continue;
+					}
+					generateDailyReport(daily_7days, i);
 				}
 			}
 		} catch (JSONException e) {
 			System.out.print("Error in second api call");
 		}
 		return null;
+	}
+	
+	private static void generateDailyReport(JSONArray thisWeek, int index) {
+		JSONObject dailyReport;
+		try {
+			dailyReport = (JSONObject) thisWeek.get(index);
+			JSONObject tempObj = (JSONObject) dailyReport.getJSONObject("temp");
+			double dayTempInF = tempObj.getDouble("day");
+			double lowTempInF = tempObj.getDouble("min");
+			double highTempInF = tempObj.getDouble("max");
+			Integer dt = dailyReport.getInt("dt");
+			Date dt2 = new Date (dt*1000L); 
+			double precipitation = Formatter.roundToTwoDecimals(dailyReport.getDouble("pop") * 100.00);
+			double cloudiness = Formatter.roundToTwoDecimals(dailyReport.getDouble("clouds"));
+			JSONArray weatherArray = dailyReport.getJSONArray("weather");
+			String description = weatherArray.optJSONObject(0).getString("description");
+			SimpleDateFormat sfd = new SimpleDateFormat("MMM-dd-yyyy");
+			System.out.println("Day " + sfd.format(dt2));
+			System.out.println("        " + Formatter.capitalizeFirstLetter(description));
+			Formatter.CreateArt(weatherArray.optJSONObject(0).getInt("id"));
+			System.out.println("        Temp: " + dayTempInF + "\u00B0" + "F");
+			System.out.println("        Low: " + lowTempInF + "\u00B0" + "F");
+			System.out.println("        High: " + highTempInF + "\u00B0" + "F");
+			System.out.println("        Precipitation: " + precipitation + "%");
+			System.out.println("        Cloudiness: " + cloudiness + "%");
+		} catch (JSONException e) {
+			System.out.print("Error generating daily report");
+		}
 	}
 }
