@@ -120,8 +120,8 @@ public class CallWeatherAPI {
 					double highTempInF = tempObj.getDouble("max");
 					Integer dt = dailyReport.getInt("dt");
 					Date dt2 = new Date (dt*1000L); 
-					double precipitation = dailyReport.getDouble("pop") * 100.00;
-					double cloudiness = dailyReport.getDouble("clouds");
+					double precipitation = Formatter.roundToTwoDecimals(dailyReport.getDouble("pop") * 100.00);
+					double cloudiness = Formatter.roundToTwoDecimals(dailyReport.getDouble("clouds"));
 					JSONArray weatherArray = dailyReport.getJSONArray("weather");
 					String description = weatherArray.optJSONObject(0).getString("description");
 					SimpleDateFormat sfd = new SimpleDateFormat("MMM-dd-yyyy");

@@ -52,5 +52,13 @@ class FormatterTests {
 		assertEquals(Formatter.capitalizeFirstLetter("hello"), "Hello");
 		assertEquals(Formatter.capitalizeFirstLetter(null), null);
 	}
+	
+	@Test
+	void roundToTwoDecimalsTest() {
+		assertEquals(Formatter.roundToTwoDecimals(3.111), 3.11);
+		assertEquals(Formatter.roundToTwoDecimals(3), 3.00);
+		assertEquals(Formatter.roundToTwoDecimals(0.0001), 0.00);
+		assertEquals(Formatter.roundToTwoDecimals(1.179), 1.18);
+	}
 
 }

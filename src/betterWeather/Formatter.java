@@ -1,5 +1,8 @@
 package betterWeather;
 
+import java.text.DecimalFormat;
+import java.text.ParseException;
+
 public class Formatter {
 	
 	public Formatter() {}
@@ -83,4 +86,7 @@ public class Formatter {
 		}
 	}
 	
+	public static double roundToTwoDecimals(double number) {
+		return Math.round(number * 100.00) / 100.00;
+	}
 }
