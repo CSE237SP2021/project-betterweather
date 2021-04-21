@@ -29,11 +29,11 @@ public class UserInput {
 		String input = this.keybordIn.nextLine();
 		String result = null;
 		Formatter formatter = new Formatter();
-		if (input.equals("name")) {
+		if (validateCity(input)) {
 			result = askForCity();
 			result = formatter.formatCity(result);
 		}
-		else if (input.equals("zipcode")) {
+		else if (validateZip(input)) {
 			result = askForZip();
 			this.isCityName = false;
 		}
@@ -42,6 +42,21 @@ public class UserInput {
 			result = askCityOrZip();
 		}
 		return result;
+	}
+	
+	public boolean validateZip(String input) {
+		if(input.toLowerCase().equals("zipcode")) {
+			return true;
+		} else {
+			return false;
+		}
+	}
+	
+	public boolean validateCity(String input) {
+		if(input.toLowerCase().equals("name")) {
+			return true;
+		}
+		return false;
 	}
 	
 	public String hourlyOrDaily() {
