@@ -87,13 +87,12 @@ public class UserInput {
 	public String oneOrAll_dailyReport() {
 		System.out.println("Do you want to display 'one' day or 'all' days this week?");
 		String input = this.keybordIn.nextLine();
-		if((!(validateOne(input) || validateAll(input)))) {
+		if (!(validateOne(input) || validateAll(input))) {
 			input = oneOrAll_dailyReport();
 		}
 		return input;
 	}
 	
-	//Function used for testing
 	public boolean validateOne(String input) {
 		if(input.toLowerCase().equals("one")) {
 			return true;
@@ -101,7 +100,6 @@ public class UserInput {
 		return false;
 	}
 	
-	//Function used for testing
 	public boolean validateAll(String input) {
 		if(input.toLowerCase().equals("all")) {
 			return true;
@@ -118,7 +116,6 @@ public class UserInput {
 		return input;
 	}
 	
-	//Function used for testing
 	public boolean validateWhichDay(String input) {
 		if(input.equals("0") || 
 				input.equals("1") ||
@@ -138,18 +135,31 @@ public class UserInput {
 		System.out.println("What would you like to do next? (number or command)");
 		System.out.println("1. Main menu");
 		System.out.println("2. Quit");
-		String answer = this.keybordIn.nextLine();
-		if(answer.equals("1")||answer.toLowerCase().equals("main menu")) {
+		String input = this.keybordIn.nextLine();
+		if(validateMainMenu(input)) {
 			return true;
-		} else if (answer.equals("2")||answer.toLowerCase().equals("quit")) {
+		} else if (validateQuit(input)) {
 			System.out.println("Thank you for using Better Weather!");
 			return false;
 		}else {
-			System.out.println(answer +" is not a valid option. Please try again");
+			System.out.println(input +" is not a valid option. Please try again");
 			askRunAgain();
 		}
 		return true;
-
+	}
+	
+	public boolean validateMainMenu(String input) {
+		if(input.equals("1")||input.toLowerCase().equals("main menu")) {
+			return true;
+		}
+		return false;
+	}
+	
+	public boolean validateQuit(String input) {
+		if(input.equals("2")||input.toLowerCase().equals("quit")) {
+			return true;
+		}
+		return false;
 	}
 	
 	public double[] askForCoordinates() {

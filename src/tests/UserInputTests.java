@@ -188,4 +188,23 @@ class UserInputTests {
 		assertFalse(test.validateWhichDay(day2));
 		assertFalse(test.validateWhichDay(day3));
 	}
+	
+	@Test
+	void isMainMenu() {
+		UserInput testingMainMenu = new UserInput();
+		boolean mainMenu1 = testingMainMenu.validateMainMenu("main menu");
+		boolean mainMenu2 = testingMainMenu.validateMainMenu("1");
+		assertTrue(mainMenu1);
+		assertTrue(mainMenu2);
+	}
+	
+	@Test
+	void isNotMainMenu() {
+		UserInput testingMainMenu = new UserInput();
+		boolean mainMenu1 = testingMainMenu.validateMainMenu("maiMenu");
+		boolean mainMenu2 = testingMainMenu.validateMainMenu("2");
+		assertFalse(mainMenu1);
+		assertFalse(mainMenu2);
+	}
+
 }
