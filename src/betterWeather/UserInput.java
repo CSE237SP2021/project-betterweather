@@ -62,7 +62,7 @@ public class UserInput {
 	public String hourlyOrDaily() {
 		System.out.println("Do you want an 'hourly' or 'daily' report?");
 		String input = this.keybordIn.nextLine();
-		if (!(input.equalsIgnoreCase("hourly") || input.equalsIgnoreCase("daily"))) {
+		if((!(validateHourly(input) || validateDaily(input)))) {
 			input = hourlyOrDaily();
 		}
 		return input;
