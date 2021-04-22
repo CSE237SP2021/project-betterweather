@@ -62,7 +62,7 @@ public class UserInput {
 	public String hourlyOrDaily() {
 		System.out.println("Do you want an 'hourly' or 'daily' report?");
 		String input = this.keybordIn.nextLine();
-		if (!(input.equalsIgnoreCase("hourly") || input.equalsIgnoreCase("daily"))) {
+		if((!(validateHourly(input) || validateDaily(input)))) {
 			input = hourlyOrDaily();
 		}
 		return input;
@@ -87,7 +87,7 @@ public class UserInput {
 	public String oneOrAll_dailyReport() {
 		System.out.println("Do you want to display 'one' day or 'all' days this week?");
 		String input = this.keybordIn.nextLine();
-		if (!(input.equalsIgnoreCase("one") || input.equalsIgnoreCase("all"))) {
+		if((!(validateOne(input) || validateAll(input)))) {
 			input = oneOrAll_dailyReport();
 		}
 		return input;
@@ -112,8 +112,7 @@ public class UserInput {
 	public String whichDay_dailyReport() {
 		System.out.println("How many days ahead do you want to see ('0', '1', '2', '3', '4', '5', '6', '7'): ");
 		String input = this.keybordIn.nextLine();
-		if (!(input.equals("0") || input.equals("1") || input.equals("2") || input.equals("3")
-				 || input.equals("4") || input.equals("5") || input.equals("6") || input.equals("7"))) {
+		if (!(validateWhichDay(input))) {
 			input = whichDay_dailyReport();
 		}
 		return input;
