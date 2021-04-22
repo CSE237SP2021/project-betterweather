@@ -206,5 +206,60 @@ class UserInputTests {
 		assertFalse(mainMenu1);
 		assertFalse(mainMenu2);
 	}
+	
+	@Test
+	void isQuit() {
+		UserInput testingQuit = new UserInput();
+		boolean quit1 = testingQuit.validateQuit("quit");
+		boolean quit2 = testingQuit.validateQuit("2");
+		assertTrue(quit1);
+		assertTrue(quit2);
+	}
+	
+	void isNotQuit() {
+		UserInput testingQuit = new UserInput();
+		boolean quit1 = testingQuit.validateQuit("qu1t");
+		boolean quit2 = testingQuit.validateQuit("1");
+		assertFalse(quit1);
+		assertFalse(quit2);
+	}
+	
+	@Test
+	void hourlyReportOneHourTrue() {
+		UserInput test = new UserInput();
+		assertTrue(test.validateWhichHour("1"));
+		assertTrue(test.validateWhichHour("2"));
+		assertTrue(test.validateWhichHour("3"));
+		assertTrue(test.validateWhichHour("4"));
+		assertTrue(test.validateWhichHour("5"));
+		assertTrue(test.validateWhichHour("6"));
+		assertTrue(test.validateWhichHour("7"));
+		assertTrue(test.validateWhichHour("8"));
+		assertTrue(test.validateWhichHour("9"));
+		assertTrue(test.validateWhichHour("10"));
+		assertTrue(test.validateWhichHour("11"));
+		assertTrue(test.validateWhichHour("12"));
+		assertTrue(test.validateWhichHour("13"));
+		assertTrue(test.validateWhichHour("14"));
+		assertTrue(test.validateWhichHour("15"));
+		assertTrue(test.validateWhichHour("16"));
+		assertTrue(test.validateWhichHour("17"));
+		assertTrue(test.validateWhichHour("18"));
+		assertTrue(test.validateWhichHour("19"));
+		assertTrue(test.validateWhichHour("20"));
+		assertTrue(test.validateWhichHour("21"));
+		assertTrue(test.validateWhichHour("22"));
+		assertTrue(test.validateWhichHour("23"));
+		assertTrue(test.validateWhichHour("24"));
+	}
+	
+	@Test
+	void hourlyReportOneHourFalse() {
+		UserInput test = new UserInput();
+		assertFalse(test.validateWhichHour("-1"));
+		assertFalse(test.validateWhichHour("one"));
+		assertFalse(test.validateWhichHour("9pm"));
+		assertFalse(test.validateWhichHour("25"));
+	}
 
 }

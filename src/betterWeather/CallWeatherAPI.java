@@ -101,17 +101,36 @@ public class CallWeatherAPI {
 			String hourlyOrDaily = input.hourlyOrDaily();
 			if(hourlyOrDaily.equalsIgnoreCase("hourly")) {
 				JSONArray hourly_48hours = data.getJSONArray("hourly");
-				System.out.println("24 Hour / Hourly Report: ");
-				for (int i = 0 ; i < hourly_48hours.length() ; i++) {
-					JSONObject hourlyReport = (JSONObject) hourly_48hours.get(i);
+				
+				UserInput uInput = new UserInput();
+				String thisHour = null;
+				String allOrOneHour = uInput.oneOrAll_hourlyReport();
+				
+				//if user only wants to see one specific hour
+				if (allOrOneHour.equalsIgnoreCase("one")) {
+					thisHour = uInput.whichHour_hourlyReport();
+					JSONObject hourlyReport = (JSONObject) hourly_48hours.get(Integer.parseInt(thisHour));
 					Integer dt = hourlyReport.getInt("dt");
 					Date dt2 = new Date(dt * 1000L);
 					SimpleDateFormat sfd = new SimpleDateFormat("h:mm a");
 					double tempInF = hourlyReport.getDouble("temp");
-					if (i < 25) {
-						System.out.println(sfd.format(dt2) + " temp: "  + tempInF + "\u00B0" +"F");
+					System.out.println(sfd.format(dt2) + " temp: "  + tempInF + "\u00B0" +"F");
+				}
+				//user wants to print all 24 hours ahead
+				else {
+					System.out.println("24 Hour / Hourly Report: ");
+					for (int i = 0 ; i < hourly_48hours.length() ; i++) {
+						JSONObject hourlyReport = (JSONObject) hourly_48hours.get(i);
+						Integer dt = hourlyReport.getInt("dt");
+						Date dt2 = new Date(dt * 1000L);
+						SimpleDateFormat sfd = new SimpleDateFormat("h:mm a");
+						double tempInF = hourlyReport.getDouble("temp");
+						if (i < 25) {
+							System.out.println(sfd.format(dt2) + " temp: "  + tempInF + "\u00B0" +"F");
+						}
 					}
 				}
+
 			} else {
 				JSONArray daily_7days = data.getJSONArray("daily");
 				UserInput uInput = new UserInput();
