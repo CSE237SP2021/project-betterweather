@@ -68,7 +68,6 @@ public class UserInput {
 		return input;
 	}
 	
-	//Function used for testing
 	public boolean validateHourly(String input) {
 		if(input.toLowerCase().equals("hourly")) {
 			return true;
@@ -76,7 +75,6 @@ public class UserInput {
 		return false;
 	}
 	
-	//Function used for testing
 	public boolean validateDaily(String input) {
 		if(input.toLowerCase().equals("daily")) {
 			return true;
@@ -130,7 +128,57 @@ public class UserInput {
 		}
 		return false;
 	}
-
+	
+	public String oneOrAll_hourlyReport() {
+		System.out.println("Do you want to display 'one' specific hour or 'all' 24 hours?");
+		String input = this.keybordIn.nextLine();
+		if (!(validateOne(input) || validateAll(input))) {
+			input = oneOrAll_hourlyReport();
+		}
+		return input;
+	}
+	
+	public String whichHour_hourlyReport() {
+		System.out.println("How many hours ahead do you want to see ('0', '1', '2', ... , '24'): ");
+		String input = this.keybordIn.nextLine();
+		if (!(validateWhichHour(input))) {
+			input = whichHour_hourlyReport();
+		}
+		return input;
+	}
+	
+	public boolean validateWhichHour(String input) {
+		if(input.equals("0") || 
+				input.equals("1") ||
+				input.equals("2") || 
+				input.equals("3") || 
+				input.equals("4") || 
+				input.equals("5") || 
+				input.equals("6") || 
+				input.equals("7") || 
+				input.equals("8") || 
+				input.equals("9") || 
+				input.equals("10") || 
+				input.equals("11") || 
+				input.equals("12") || 
+				input.equals("13") || 
+				input.equals("14") || 
+				input.equals("15") || 
+				input.equals("16") || 
+				input.equals("17") || 
+				input.equals("18") || 
+				input.equals("19") || 
+				input.equals("20") || 
+				input.equals("21") || 
+				input.equals("22") || 
+				input.equals("23") || 
+				input.equals("24"))
+		{
+			return true;
+		}
+		return false;
+	}
+	
 	public boolean askRunAgain() {
 		System.out.println("What would you like to do next? (number or command)");
 		System.out.println("1. Main menu");
