@@ -21,20 +21,23 @@ import betterWeather.UserInput;
 public class CallWeatherAPI {
 	private static HttpURLConnection connection;
 	private static String apiKey = "947715afc3c347e432a3c4fa32ae1af3";
+	private static String unitsAPICall;
+	private static String unit;
 	
 	/**
 	 * 
 	 * @param cityName, the city name to search weather data through api call
 	 */
-	public void makeCityApiCall(String cityName_or_Zip, boolean isCityName) {
+	public void makeCityApiCall(String cityName_or_Zip, boolean isCityName, String searchUnits) {
+		unitsAPICall = searchUnits;
 		//Create client to make api call to openAPI with a city name a user has inputted
 		HttpClient client = HttpClient.newHttpClient();
 		String url;
 		if (isCityName) {
-			url = "https://api.openweathermap.org/data/2.5/weather?q=" + cityName_or_Zip + "&appid=" + apiKey + "&units=imperial";
+			url = "https://api.openweathermap.org/data/2.5/weather?q=" + cityName_or_Zip + "&appid=" + apiKey + "&units="+ unitsAPICall;
 		}
 		else {
-			url = "https://api.openweathermap.org/data/2.5/weather?zip=" + cityName_or_Zip + "&appid=" + apiKey + "&units=imperial";
+			url = "https://api.openweathermap.org/data/2.5/weather?zip=" + cityName_or_Zip + "&appid=" + apiKey + "&units="+ unitsAPICall;
 		}
 		HttpRequest request = HttpRequest.newBuilder()
 				.uri(URI.create(url)).build();
@@ -57,15 +60,23 @@ public class CallWeatherAPI {
 			JSONObject main = data.getJSONObject("main");
 			
 			String cityName = data.getString("name");
-			double tempInF = main.getDouble("temp");
+			double temp = main.getDouble("temp");
+			unit = Formatter.getUnit(unitsAPICall);
+			String outfit;
+			if(unit=="F") {
+				outfit = Formatter.getOutfitImperial(temp);
+			}else {
+				outfit = Formatter.getOutfitMetric(temp);
+			}
 			
 			System.out.println("City: " + cityName);
-			System.out.println("Current day temp: " + tempInF + "\u00B0" + "F"); 
+			System.out.println("Current day temp: " + temp + "\u00B0" + unit); 
+			System.out.println("Your recommended outfit: " + outfit);
 			
 			JSONObject coord = data.getJSONObject("coord");
 			Double lat = coord.getDouble("lat");
 			Double lon = coord.getDouble("lon");
-			System.out.println("Coordinates -> Latitude: " + lat + " / Longitude: " + lon);
+			//System.out.println("Coordinates -> Latitude: " + lat + " / Longitude: " + lon);
 			makeCoordApiCall(lat, lon);
 		} catch (JSONException e) {
 			System.out.print("Invalid city.");
@@ -82,7 +93,7 @@ public class CallWeatherAPI {
 		HttpClient client = HttpClient.newHttpClient();
 		HttpRequest request = HttpRequest.newBuilder()
 				.uri(URI.create("https://api.openweathermap.org/data/2.5/onecall?lat=" + lat + "&lon=" + lon
-						+ "&exclude=minutely" + "&appid=" + apiKey + "&units=imperial")).build();
+						+ "&exclude=minutely" + "&appid=" + apiKey + "&units="+unitsAPICall)).build();
 		client.sendAsync(request, HttpResponse.BodyHandlers.ofString())
 			.thenApply(HttpResponse::body)
 			.thenApply(CallWeatherAPI::parseCoord)
@@ -113,8 +124,8 @@ public class CallWeatherAPI {
 					Integer dt = hourlyReport.getInt("dt");
 					Date dt2 = new Date(dt * 1000L);
 					SimpleDateFormat sfd = new SimpleDateFormat("h:mm a");
-					double tempInF = hourlyReport.getDouble("temp");
-					System.out.println(sfd.format(dt2) + " temp: "  + tempInF + "\u00B0" +"F");
+					double temp = hourlyReport.getDouble("temp");
+					System.out.println(sfd.format(dt2) + " temp: "  + temp + "\u00B0" + unit);
 				}
 				//user wants to print all 24 hours ahead
 				else {
@@ -124,9 +135,9 @@ public class CallWeatherAPI {
 						Integer dt = hourlyReport.getInt("dt");
 						Date dt2 = new Date(dt * 1000L);
 						SimpleDateFormat sfd = new SimpleDateFormat("h:mm a");
-						double tempInF = hourlyReport.getDouble("temp");
+						double temp = hourlyReport.getDouble("temp");
 						if (i < 25) {
-							System.out.println(sfd.format(dt2) + " temp: "  + tempInF + "\u00B0" +"F");
+							System.out.println(sfd.format(dt2) + " temp: "  + temp + "\u00B0" + unit);
 						}
 					}
 				}
@@ -166,9 +177,9 @@ public class CallWeatherAPI {
 		try {
 			dailyReport = (JSONObject) thisWeek.get(index);
 			JSONObject tempObj = (JSONObject) dailyReport.getJSONObject("temp");
-			double dayTempInF = tempObj.getDouble("day");
-			double lowTempInF = tempObj.getDouble("min");
-			double highTempInF = tempObj.getDouble("max");
+			double daytemp = tempObj.getDouble("day");
+			double lowtemp = tempObj.getDouble("min");
+			double hightemp = tempObj.getDouble("max");
 			Integer dt = dailyReport.getInt("dt");
 			Date dt2 = new Date (dt*1000L); 
 			double precipitation = Formatter.roundToTwoDecimals(dailyReport.getDouble("pop") * 100.00);
@@ -179,9 +190,9 @@ public class CallWeatherAPI {
 			System.out.println("Day " + sfd.format(dt2));
 			System.out.println("        " + Formatter.capitalizeFirstLetter(description));
 			Formatter.CreateArt(weatherArray.optJSONObject(0).getInt("id"));
-			System.out.println("        Temp: " + dayTempInF + "\u00B0" + "F");
-			System.out.println("        Low: " + lowTempInF + "\u00B0" + "F");
-			System.out.println("        High: " + highTempInF + "\u00B0" + "F");
+			System.out.println("        Temp: " + daytemp + "\u00B0" + unit);
+			System.out.println("        Low: " + lowtemp + "\u00B0" + unit);
+			System.out.println("        High: " + hightemp + "\u00B0" + unit);
 			System.out.println("        Precipitation: " + precipitation + "%");
 			System.out.println("        Cloudiness: " + cloudiness + "%");
 		} catch (JSONException e) {
@@ -189,3 +200,4 @@ public class CallWeatherAPI {
 		}
 	}
 }
+
