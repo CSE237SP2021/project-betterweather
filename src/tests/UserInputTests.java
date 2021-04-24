@@ -261,5 +261,34 @@ class UserInputTests {
 		assertFalse(test.validateWhichHour("9pm"));
 		assertFalse(test.validateWhichHour("25"));
 	}
+	
+	@Test
+	void isMetric() {
+		UserInput testingMetric = new UserInput();
+		assertTrue(testingMetric.validateMetric("metric"));
+		assertTrue(testingMetric.validateMetric("MEtric"));
+	}
+	
+	@Test
+	void isNotMetric() {
+		UserInput testingMetric = new UserInput();
+		assertFalse(testingMetric.validateMetric("m3tric"));
+		assertFalse(testingMetric.validateMetric("metrik"));
+	}
+	
+	@Test
+	void isImperial() {
+		UserInput testingImperial = new UserInput();
+		assertTrue(testingImperial.validateImperial("imperial"));
+		assertTrue(testingImperial.validateImperial("ImpErial"));
+	}
+	
+	@Test
+	void isNotImperial() {
+		UserInput testingImperial = new UserInput();
+		assertFalse(testingImperial.validateImperial("1mperial"));
+		assertFalse(testingImperial.validateImperial("inperial"));
+	}
 
 }
+

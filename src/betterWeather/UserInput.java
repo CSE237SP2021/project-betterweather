@@ -24,6 +24,8 @@ public class UserInput {
 		return cityZip;
 	}
 	
+
+	
 	public String askCityOrZip() {
 		System.out.println("Search city by 'name' or 'zipcode'");
 		String input = this.keybordIn.nextLine();
@@ -42,6 +44,36 @@ public class UserInput {
 			result = askCityOrZip();
 		}
 		return result;
+	}
+	
+	public String askImperialorMetric() {
+		System.out.println("Display 'imperial' or 'metric' units?");
+		String input = this.keybordIn.nextLine();
+		if (validateImperial(input)) {
+			return "imperial";
+		}
+		else if (validateMetric(input)) {
+			return "metric";
+		}
+		else {
+			System.out.println("Invalid Units. Please enter 'imperial' or 'metric' ");
+			input = askImperialorMetric();
+		}
+		return input;
+	}
+	
+	public boolean validateMetric(String input) {
+		if(input.toLowerCase().equals("metric")) {
+			return true;
+		}
+		return false;
+	}
+	
+	public boolean validateImperial(String input) {
+		if(input.toLowerCase().equals("imperial")) {
+			return true;
+		}
+		return false;
 	}
 	
 	public boolean validateZip(String input) {
@@ -240,3 +272,4 @@ public class UserInput {
 	}
 
 }
+
