@@ -153,7 +153,7 @@ public class CallWeatherAPI {
 				}
 				
 				//7 Day report
-				System.out.println("7 Day / Daily Report: ");
+				System.out.println("Daily Report: ");
 				for (int i = 0 ; i < daily_7days.length() ; i++) {
 					//Single day report
 					if (allOrOne.equalsIgnoreCase("one")) {
